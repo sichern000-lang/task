@@ -218,6 +218,11 @@ a{color:var(--green)}
 .chain button:hover{transform:translateY(-1px)}
 .chain .n{background:var(--red);color:#fff;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:700}
 #places .controls{margin-top:6px}
+/* 마우스 발자국: 0.1초에 사라짐 */
+#prints{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
+#prints svg.shoe{position:absolute;width:15px;height:29px;fill:#7a4a2b;opacity:0;animation:printfade .65s linear forwards}
+/* 0.05초 나타남 → 0.5초 유지 → 0.1초에 사라짐 */
+@keyframes printfade{0%{opacity:0;scale:.7}8%{opacity:.8;scale:1}85%{opacity:.8;scale:1}100%{opacity:0;scale:1}}
 </style>
 </head>
 <body>
@@ -369,7 +374,9 @@ const routeKm = ids => ids.map(byId).reduce((s, d, i, a) => i ? s + km(a[i - 1],
 // ---------- 지도 ----------
 let map = null, clusters = null, routeLayer = null; const markers = {};
 if (window.L && L.markerClusterGroup) {
-  map = L.map('map', {zoomControl: true}).setView([33.38, 126.55], 10);
+  // 제주도 영역에 고정: 이 범위 밖으로는 끌어도 나가지 않고, 너무 멀리 축소도 안 됨
+  const JEJU = L.latLngBounds([33.05, 126.05], [33.70, 127.05]);
+  map = L.map('map', {zoomControl: true, maxBounds: JEJU, maxBoundsViscosity: 1, minZoom: 9, bounceAtZoomLimits: false}).setView([33.38, 126.55], 10);
   const esri = k => `https://server.arcgisonline.com/ArcGIS/rest/services/${k}/MapServer/tile/{z}/{y}/{x}`;
   const opt = {maxZoom: 18, attribution: 'Tiles &copy; Esri'};
   const base = {'일반': L.tileLayer(esri('World_Street_Map'), opt), '지형': L.tileLayer(esri('World_Topo_Map'), opt), '위성': L.tileLayer(esri('World_Imagery'), opt)};
@@ -560,6 +567,33 @@ $('stats').innerHTML = [[data.length, '기록된 장소'], [new Set(data.map(d =
 })();
 $('track').innerHTML = [0, 1].map(() => themes.map(t => `<span>${esc(t)}</span>`).join('')).join('');
 render();
+
+// 마우스 발자국: 움직인 방향으로 좌우 번갈아 찍히고, 잠깐 머문 뒤 0.1초에 지워짐 (마우스 환경에서만)
+(function () {
+  if (matchMedia('(hover: none)').matches) return;   // 터치 기기만 제외
+  const layer = document.createElement('div'); layer.id = 'prints'; document.body.appendChild(layer);
+  // 신발 밑창(앞부분 + 뒤꿈치). 무늬는 같은 path 안의 구멍(evenodd)으로 파서 마스크 없이 표현
+  const FOOT = '<svg class="shoe" viewBox="0 0 18 34" aria-hidden="true"><path fill-rule="evenodd" d="M9 1.2C4.6 1.2 2.4 5.6 2.4 10.6c0 3.2.9 6.2 1.8 9h9.6c.9-2.8 1.8-5.8 1.8-9C15.6 5.6 13.4 1.2 9 1.2zM5.6 6.4h6.8v1.2H5.6zM4.8 9.9h8.4v1.2H4.8zM4.6 13.4h8.8v1.2H4.6zM5 16.9h8v1.2H5zM4.4 22.2h9.2c.5 3 .3 6-.8 8.6-.6 1.4-1.8 2.2-3.8 2.2s-3.2-.8-3.8-2.2c-1.1-2.6-1.3-5.6-.8-8.6zM6.2 24.6h5.6v1.1H6.2zM6.2 27.6h5.6v1.1H6.2z"/></svg>';
+  let lx = null, ly = null, acc = 0, right = true;
+  const STEP = 20;   // 이 거리만큼 움직일 때마다 한 발자국
+  document.addEventListener('mousemove', e => {
+    if (lx === null) { lx = e.clientX; ly = e.clientY; return; }
+    const dx = e.clientX - lx, dy = e.clientY - ly, d = Math.hypot(dx, dy);
+    lx = e.clientX; ly = e.clientY; acc += d;
+    if (acc < STEP || !d) return;
+    acc = 0;
+    const hx = dx / d, hy = dy / d, off = right ? 6 : -6;        // 진행 방향의 좌우로 번갈아 비껴 찍기
+    const x = e.clientX - hy * off, y = e.clientY + hx * off;
+    const ang = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+    const el = document.createElement('span'); el.innerHTML = FOOT;
+    const svg = el.lastChild;
+    svg.style.left = (x - 7.5) + 'px'; svg.style.top = (y - 14.5) + 'px';
+    svg.style.transform = `rotate(${ang}deg) scaleX(${right ? 1 : -1})`;
+    svg.addEventListener('animationend', () => svg.remove());
+    layer.appendChild(svg); right = !right;
+    while (layer.children.length > 120) layer.firstChild.remove();
+  }, {passive: true});
+})();
 
 // 히어로 타이핑 효과: 글자를 미리 배치해 두고 하나씩 보여 줘서 레이아웃이 흔들리지 않음
 (function () {
