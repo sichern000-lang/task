@@ -246,6 +246,26 @@ nav a{font-size:17px}
 .hero-form input{font-size:19px}
 .wish span{font-size:18px}
 .wish .e{font-size:22px}
+/* 요즘 뜨는 장소 순위 */
+.rank{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:10px}
+.rank li{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:6px 14px;background:var(--paper);border-radius:16px;padding:14px 16px;cursor:pointer;transition:transform .25s,box-shadow .25s}
+.rank li:hover{transform:translateY(-2px);box-shadow:0 8px 20px -12px rgba(47,61,42,.5)}
+.rank .no{font-size:30px;font-weight:700;line-height:1;text-align:center;color:var(--muted)}
+.rank li:nth-child(1){background:linear-gradient(135deg,#fbf1c4,#f1e29a)}.rank li:nth-child(2){background:linear-gradient(135deg,#eef1f4,#d8dfe6)}.rank li:nth-child(3){background:linear-gradient(135deg,#f6e3d3,#ecc7a7)}
+.rank li:nth-child(-n+3) .no{color:var(--green)}
+.rank .nm{font-size:18px;font-weight:700;line-height:1.3}
+.rank .tg{font-size:13px;color:var(--muted)}
+.rank .bar{grid-column:2;height:6px;border-radius:99px;background:rgba(47,61,42,.12);overflow:hidden;margin-top:4px}
+.rank .bar i{display:block;height:100%;width:var(--w);background:var(--red);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+.js #trending:not(.in) .rank .bar i{width:0}
+.rank .heart{grid-column:3;grid-row:1/3;display:flex;align-items:center;justify-content:center;border:0;background:rgba(255,255,255,.8);color:var(--red);border-radius:50%;width:40px;height:40px;padding:0;cursor:pointer;font-size:18px;line-height:1.1;transition:transform .2s}
+.rank .chg{display:inline-block;font-size:12px;font-weight:700;margin-left:6px;vertical-align:2px}
+.rank .chg.up{color:var(--red)}.rank .chg.down{color:#3f6fa8}.rank .chg.same{color:var(--muted)}
+.rank .chg.new{background:var(--green);color:#fff;border-radius:99px;padding:0 8px}
+.rank .heart:hover{transform:scale(1.08)}
+.rank .heart.on{background:var(--red);color:#fff}
+.rank-note{margin:14px 2px 0;font-size:13px;color:var(--muted)}
+@media(max-width:480px){.rank li{grid-template-columns:34px 1fr auto;padding:12px}.rank .nm{font-size:16px}}
 </style>
 </head>
 <body>
@@ -253,7 +273,7 @@ nav a{font-size:17px}
 
 <section class="hero">
   <nav>
-    <div><a href="#explore">지도</a><a href="#list">목록</a></div>
+    <div><a href="#trending">순위</a><a href="#explore">지도</a><a href="#list">목록</a></div>
     <p class="logo">제주 역사문화</p>
     <button class="navheart" id="likeBtn" aria-label="좋아요한 장소와 루트">♥ <span id="likeCount">0</span></button>
   </nav>
@@ -287,6 +307,14 @@ nav a{font-size:17px}
 
       <a class="cue" href="#explore"><span>아래로 스크롤해서 나만의 루트 만들기</span>
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M5 13l7 7 7-7"/></svg></a>
+    </section>
+
+    <section class="block reveal" id="trending">
+      <div class="eyebrow">TRENDING NOW</div>
+      <h2 class="title">요즘 뜨는 장소 TOP 7</h2>
+      <p class="sub">이번 주 사람들이 많이 찾아본 제주의 장소예요.</p>
+      <ol class="rank" id="rank"></ol>
+      <p class="rank-note">※ 샘플 데이터입니다. 실제 집계 결과가 아니에요.</p>
     </section>
 
     <section class="block reveal" id="explore">
@@ -454,6 +482,7 @@ function render() {
     <h3 class="grp-title">${esc(k)} <span>${groups[k].length}</span></h3><div class="grid">${groups[k].map(card).join('')}</div></section>`).join('')
     : '<div class="empty">검색 결과가 없습니다.</div>';
 
+  renderRank();
   renderRoute();
   if (map) {
     clusters.clearLayers(); clusters.addLayers(list.map(d => markers[d.id]));
@@ -468,6 +497,23 @@ const card = d => { const on = favs.includes(d.id), i = colorIdx(d); return `
     <div class="info"><span class="tag" style="background:${PASTEL[i]}">${esc(themeOf(d))}</span><span class="tag" style="background:${PASTEL[i]}">${esc(d.town.replace(/^\S+\s/, ''))}</span>
       <p class="t">${esc(d.title)}</p><p class="a">${esc(d.addr)}</p></div>
   </div>`; };
+
+// ---------- 요즘 뜨는 장소 순위 (샘플 데이터) ----------
+// 순위·지난주 대비 변동·관심 지수는 미리 정해 둔 값이며 실제 집계가 아님
+const TRENDING = [
+  {name: '비자림', chg: '▲2', idx: 100}, {name: '쇠소깍해변', chg: '—', idx: 94}, {name: '송악산 해안동굴', chg: '▲1', idx: 88},
+  {name: '동문시장', chg: '▼2', idx: 81}, {name: '한라산 고산습지', chg: 'NEW', idx: 74}, {name: '사계해변', chg: '▼1', idx: 69}, {name: '안덕계곡', chg: '▲3', idx: 63}];
+function renderRank() {
+  $('rank').innerHTML = TRENDING.map((t, i) => {
+    const d = data.find(x => x.name === t.name); if (!d) return '';
+    const cls = t.chg === 'NEW' ? 'new' : t.chg.startsWith('▲') ? 'up' : t.chg.startsWith('▼') ? 'down' : 'same', on = favs.includes(d.id);
+    return `<li data-id="${d.id}" tabindex="0">
+      <span class="no">${i + 1}</span>
+      <div><div class="nm">${esc(d.name)} <span class="chg ${cls}">${t.chg}</span></div><div class="tg">${esc(themeOf(d))} · ${esc(d.town.replace(/^\S+\s/, ''))} · 관심 지수 ${t.idx}</div></div>
+      <button class="heart ${on ? 'on' : ''}" data-fav="${d.id}" aria-label="좋아요" aria-pressed="${on}">${on ? '♥' : '♡'}</button>
+      <div class="bar"><i style="--w:${t.idx}%"></i></div>
+    </li>`; }).join('');
+}
 
 // ---------- 지도 위의 루트 + 상단바 하트 + 요약 ----------
 function renderRoute() {
@@ -547,6 +593,11 @@ function detail(d) {
 }
 
 // ---------- 이벤트 ----------
+$('rank').addEventListener('click', e => {
+  const h = e.target.closest('.heart'); if (h) { render.skipFit = true; return toggleFav(h.dataset.fav); }
+  const li = e.target.closest('li'); if (li) detail(byId(li.dataset.id));
+});
+$('rank').addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('li')) e.target.click(); });
 $('groups').addEventListener('click', e => {
   const f = e.target.closest('.fav'); if (f) { render.skipFit = true; return toggleFav(f.dataset.fav); }
   const c = e.target.closest('.card'); if (c) detail(byId(c.dataset.id));
@@ -654,7 +705,8 @@ render();
     best = best || {x: 8, y: H - h - 14};
     return {x: best.x / W * 100, y: best.y / H * 100};
   };
-  const add = (w, animate) => {
+  const elOf = new Map();   // 저장된 항목 → 화면 요소
+  const add = (w, animate, delay = 0) => {
     const el = document.createElement('div'); el.className = 'wish';
     el.innerHTML = '<span><i class="e"></i></span>';
     const sp = el.firstChild; sp.append(document.createTextNode(w.t)); sp.firstChild.textContent = w.e;
@@ -663,16 +715,19 @@ render();
     el.style.left = w.x + '%'; el.style.top = w.y + '%'; el.style.visibility = '';
     sp.style.setProperty('--d', (6 + Math.random() * 4).toFixed(1) + 's'); sp.style.setProperty('--l', (-Math.random() * 6).toFixed(1) + 's');
     sp.style.setProperty('--dx', (Math.random() * 14 - 7).toFixed(0) + 'px'); sp.style.setProperty('--dy', (-8 - Math.random() * 10).toFixed(0) + 'px');
-    if (!animate) el.style.animation = 'none';
+    if (!animate) el.style.animation = 'none'; else if (delay) el.style.animationDelay = delay + 's';
+    elOf.set(w, el);
     return el;
   };
   wishes.forEach(w => add(w, false));
+  // 입력하기 전에도 몇 개가 떠 있도록 예시 장소를 먼저 띄움 (저장하지 않음)
+  ['성산일출봉', '협재 바다', '한라산 윗세오름', '흑돼지 거리', '우도 카페', '용눈이오름', '동문시장'].forEach((t, i) => add({t, e: emojiFor(t)}, true, 0.6 + i * 0.3));
   $('wishForm').addEventListener('submit', e => {
     e.preventDefault();
     const t = input.value.trim().replace(/\s+/g, ' ');
     if (!t) return input.focus();
     const w = {t, e: emojiFor(t)}; wishes.push(w);
-    if (wishes.length > 30) { wishes.shift(); layer.firstChild.remove(); }
+    if (wishes.length > 30) { const old = wishes.shift(); elOf.get(old)?.remove(); elOf.delete(old); }
     add(w, true); save(); input.value = '';
   });
 })();
