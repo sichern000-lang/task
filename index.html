@@ -8,13 +8,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css">
 <title>제주 역사문화 지도</title>
 <style>
-@font-face{font-family:'BusanDandiGothic';src:url('https://cdn.jsdelivr.net/gh/Project-Noonnu/2610132210@l/l/부산단디고딕L.woff2') format('woff2');font-weight:300;font-display:swap}
-@font-face{font-family:'BusanDandiGothic';src:url('https://cdn.jsdelivr.net/gh/Project-Noonnu/2610132210@l/l/부산단디고딕M.woff2') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'BusanDandiGothic';src:url('https://cdn.jsdelivr.net/gh/Project-Noonnu/2610132210@l/l/부산단디고딕B.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'JoseonGaneGothic';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunSg.woff') format('woff');font-weight:normal;font-display:swap}
+@font-face{font-family:'SparklingAtNineteen';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_10@1.0/Syning_19.woff') format('woff');font-weight:normal;font-display:swap}
 :root{--cream:#f4f2dc;--paper:#fbfaf0;--blue:#bfd4ee;--sage:#d3dcc6;--green:#2f3d2a;--yellow:#f1e29a;--text:#2f3d2a;--muted:#6d7660;--line:#d9d9bd;--red:#c8503f}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--cream);color:var(--text);font:500 16px/1.65 "BusanDandiGothic","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+body{margin:0;background:var(--cream);color:var(--text);font:400 16px/1.65 "JoseonGaneGothic","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
 button,input,select{font-family:inherit}
 h1,h2,h3,h4{font-weight:700;letter-spacing:-.01em}
 .topbar{background:var(--blue);text-align:center;font-size:13px;padding:6px 0}
@@ -127,10 +126,7 @@ a{color:var(--green)}
 .hero h1 .ch.on{opacity:1}
 .hero h1 .ch.cur::after{content:"";display:inline-block;width:3px;height:.9em;margin-left:3px;vertical-align:-.1em;background:var(--green);animation:blink .8s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
-.hero .pill{animation:blink-slow 2.6s ease-in-out infinite;transition:transform .3s}
-.hero .pill:hover{transform:translateY(-2px);animation-play-state:paused;opacity:1}
-@keyframes blink-slow{0%,100%{opacity:1}50%{opacity:.35}}
-@media (prefers-reduced-motion:reduce){.hero .pill{animation:none}.hero h1 .ch.cur::after{animation:none}}
+@media (prefers-reduced-motion:reduce){.hero h1 .ch.cur::after{animation:none}}
 .sis{display:inline-flex;gap:14px}
 .rc{display:inline-flex;align-items:center;gap:7px;font-size:15px;font-weight:700;cursor:pointer;user-select:none}
 .rc input{position:absolute;opacity:0;width:0;height:0;min-width:0;padding:0}
@@ -223,6 +219,33 @@ a{color:var(--green)}
 #prints svg.shoe{position:absolute;width:15px;height:29px;fill:#7a4a2b;opacity:0;animation:printfade .65s linear forwards}
 /* 0.05초 나타남 → 0.5초 유지 → 0.1초에 사라짐 */
 @keyframes printfade{0%{opacity:0;scale:.7}8%{opacity:.8;scale:1}85%{opacity:.8;scale:1}100%{opacity:0;scale:1}}
+/* 히어로: 질문 + 입력창 + 떠다니는 장소들 */
+.hero-sub{margin:14px 0 0;font-size:clamp(17px,2.4vw,22px);font-weight:700;color:var(--green);transition:opacity .9s,transform .9s}
+.hero-form{display:flex;align-items:center;width:min(420px,88vw);margin:20px auto 0;background:rgba(255,255,255,.88);border-radius:99px;padding:5px 5px 5px 20px;box-shadow:0 8px 24px -10px rgba(47,61,42,.5);transition:opacity .9s .15s,transform .9s .15s}
+.hero-form input{flex:1;min-width:0;border:0;background:transparent;padding:9px 4px;font-size:16px;color:var(--text);outline:0}
+.hero-form input::placeholder{color:#7d8672}
+.hero-form button{flex:none;width:40px;height:40px;border:0;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;cursor:pointer;transition:transform .2s,background .2s}
+.hero-form button:hover{background:#3e5037;transform:translateX(2px)}
+.hero-form:focus-within{box-shadow:0 0 0 3px rgba(241,226,154,.95),0 8px 24px -10px rgba(47,61,42,.5)}
+.hero-body.pre .hero-sub,.hero-body.pre .hero-form{opacity:0;transform:translateY(12px)}
+.wishes{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.wish{position:absolute;animation:wishpop .7s cubic-bezier(.2,1.4,.4,1) both}
+.wish span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:var(--green);font-weight:700;font-size:15px;padding:7px 14px 7px 10px;border-radius:99px;box-shadow:0 6px 16px -8px rgba(47,61,42,.55);animation:wishfloat var(--d,7s) ease-in-out var(--l,0s) infinite}
+.wish .e{font-size:20px;line-height:1}
+@keyframes wishpop{0%{opacity:0;transform:scale(.4) translateY(30px)}100%{opacity:1;transform:none}}
+@keyframes wishfloat{0%,100%{transform:translate(0,0)}50%{transform:translate(var(--dx,6px),var(--dy,-12px))}}
+@media (prefers-reduced-motion:reduce){.wish span{animation:none}}
+/* 히어로만 감성 폰트 (굵기는 폰트 그대로, 가짜 볼드 방지) */
+.hero,.hero input,.hero button{font-family:'SparklingAtNineteen','JoseonGaneGothic',"Apple SD Gothic Neo",sans-serif}
+.hero *,.hero .wish span{font-weight:400}
+.hero h1{font-size:clamp(48px,8.4vw,90px);line-height:1.2;letter-spacing:0}
+.hero-sub{font-size:clamp(24px,3.6vw,34px);letter-spacing:.01em}
+nav .logo{font-size:36px}
+nav a{font-size:20px}
+.navheart{font-size:20px}
+.hero-form input{font-size:22px}
+.wish span{font-size:21px}
+.wish .e{font-size:22px}
 </style>
 </head>
 <body>
@@ -234,9 +257,14 @@ a{color:var(--green)}
     <p class="logo">제주 역사문화</p>
     <button class="navheart" id="likeBtn" aria-label="좋아요한 장소와 루트">♥ <span id="likeCount">0</span></button>
   </nav>
-  <div class="hero-body">
-    <h1 id="typing" aria-label="제주의 시간을, 직접 걷다."><span aria-hidden="true">제주의 시간을, <em>직접</em> 걷다.</span></h1>
-    <a class="pill" href="#explore">답사 시작하기</a>
+  <div class="wishes" id="wishes" aria-label="사람들이 남긴 제주의 장소"></div>
+  <div class="hero-body" id="heroBody">
+    <h1 id="typing" aria-label="제주의 시간을 걷다."><span aria-hidden="true">제주의 시간을 걷다.</span></h1>
+    <p class="hero-sub">당신의 장소는 어디인가요?</p>
+    <form class="hero-form" id="wishForm" autocomplete="off">
+      <input id="wishInput" type="text" maxlength="16" placeholder="나만의 제주 장소를 적어 보세요" aria-label="나만의 제주 장소">
+      <button type="submit" aria-label="장소 남기기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </form>
   </div>
 </section>
 
@@ -595,19 +623,74 @@ render();
   }, {passive: true});
 })();
 
+// ---------- 히어로: 당신의 장소는 어디인가요? ----------
+// 입력한 장소가 이모지와 함께 히어로에 떠다니며 남음 (이 브라우저에 저장)
+(function () {
+  const hero = document.querySelector('.hero'), layer = $('wishes'), input = $('wishInput');
+  const EMOJI = [[/바다|해변|해수욕|협재|함덕|월정|표선/, '🌊'], [/오름|산|한라|등반|숲|곶자왈|트레킹/, '⛰️'], [/카페|커피|디저트/, '☕'], [/흑돼지|고기|맛집|식당|국수|해장|밥/, '🐷'],
+    [/귤|감귤|한라봉|천혜향|과수원/, '🍊'], [/말|승마|목장/, '🐴'], [/돌하르방|돌담|현무암/, '🗿'], [/일출|성산|해돋이|노을|일몰/, '🌅'], [/폭포|계곡|물/, '💧'],
+    [/해녀|물질|물고기|회|낚시|전복|해산물/, '🐚'], [/꽃|유채|수국|동백|벚꽃/, '🌸'], [/절|사찰|암자/, '🛕'], [/집|숙소|게스트하우스|펜션|호텔/, '🏡'], [/바람|풍력|바람개비/, '🍃'], [/별|밤|야경/, '⭐'], [/비|안개/, '☁️'], [/박물관|유적|성|역사|묘|궁/, '🏛️'], [/동굴|굴|용암/, '🕳️'], [/시장|장터/, '🧺']];
+  const RANDOM = ['📍', '✨', '🌿', '🍊', '🌊', '🪨', '🐚', '🌺', '🧡', '🍃'];
+  const emojiFor = t => (EMOJI.find(([re]) => re.test(t)) || [0, RANDOM[Math.floor(Math.random() * RANDOM.length)]])[1];
+  let wishes = [];
+  try { wishes = JSON.parse(localStorage.getItem('jejuWishes')) || []; } catch (e) {}
+  const save = () => { try { localStorage.setItem('jejuWishes', JSON.stringify(wishes)); } catch (e) {} };
+
+  // 문구·입력창과 겹치지 않고 다른 글자와도 덜 겹치는 빈자리를 찾음 (비율로 저장)
+  const spot = el => {
+    const hr = hero.getBoundingClientRect(), W = hr.width, H = hr.height, w = el.offsetWidth, h = el.offsetHeight;
+    const keep = [...$('heroBody').children].map(c => c.getBoundingClientRect()).filter(r => r.width)
+      .reduce((a, r) => ({l: Math.min(a.l, r.left), r: Math.max(a.r, r.right), t: Math.min(a.t, r.top), b: Math.max(a.b, r.bottom)}), {l: 1e9, r: -1e9, t: 1e9, b: -1e9});
+    const ex = {l: keep.l - hr.left - 18, r: keep.r - hr.left + 18, t: keep.t - hr.top - 14, b: keep.b - hr.top + 14};
+    const others = [...layer.children].map(c => c.getBoundingClientRect());
+    const hit = (x, y, r) => x < r.right - hr.left + 8 && x + w > r.left - hr.left - 8 && y < r.bottom - hr.top + 8 && y + h > r.top - hr.top - 8;
+    let best = null;
+    for (let n = 0; n < 80; n++) {
+      const x = 8 + Math.random() * Math.max(1, W - w - 16), y = 64 + Math.random() * Math.max(1, H - h - 78);
+      if (x < ex.r && x + w > ex.l && y < ex.b && y + h > ex.t) continue;      // 문구 영역 피하기
+      best = {x, y};
+      if (!others.some(r => hit(x, y, r))) break;                               // 다른 장소와도 안 겹치면 확정
+    }
+    best = best || {x: 8, y: H - h - 14};
+    return {x: best.x / W * 100, y: best.y / H * 100};
+  };
+  const add = (w, animate) => {
+    const el = document.createElement('div'); el.className = 'wish';
+    el.innerHTML = '<span><i class="e"></i></span>';
+    const sp = el.firstChild; sp.append(document.createTextNode(w.t)); sp.firstChild.textContent = w.e;
+    el.style.visibility = 'hidden'; layer.appendChild(el);
+    if (!w.x && w.x !== 0) { Object.assign(w, spot(el)); save(); }
+    el.style.left = w.x + '%'; el.style.top = w.y + '%'; el.style.visibility = '';
+    sp.style.setProperty('--d', (6 + Math.random() * 4).toFixed(1) + 's'); sp.style.setProperty('--l', (-Math.random() * 6).toFixed(1) + 's');
+    sp.style.setProperty('--dx', (Math.random() * 14 - 7).toFixed(0) + 'px'); sp.style.setProperty('--dy', (-8 - Math.random() * 10).toFixed(0) + 'px');
+    if (!animate) el.style.animation = 'none';
+    return el;
+  };
+  wishes.forEach(w => add(w, false));
+  $('wishForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const t = input.value.trim().replace(/\s+/g, ' ');
+    if (!t) return input.focus();
+    const w = {t, e: emojiFor(t)}; wishes.push(w);
+    if (wishes.length > 30) { wishes.shift(); layer.firstChild.remove(); }
+    add(w, true); save(); input.value = '';
+  });
+})();
+
 // 히어로 타이핑 효과: 글자를 미리 배치해 두고 하나씩 보여 줘서 레이아웃이 흔들리지 않음
 (function () {
-  const h1 = $('typing'), box = h1.firstElementChild;
+  const h1 = $('typing'), box = h1.firstElementChild, body = $('heroBody');
   const chars = [];
   const wrap = n => { [...n.childNodes].forEach(c => {
     if (c.nodeType === 3) c.replaceWith(...[...c.textContent].map(t => { const s = document.createElement('span'); s.className = 'ch'; s.textContent = t; chars.push(s); return s; }));
     else wrap(c); }); };
   wrap(box);
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return chars.forEach(c => c.classList.add('on'));
+  body.classList.add('pre');   // 문구가 다 써진 뒤 질문과 입력창이 떠오름
   let i = 0;
   const step = () => {
     if (i > 0) chars[i - 1].classList.remove('cur');
-    if (i >= chars.length) { chars[chars.length - 1].classList.add('cur'); setTimeout(() => chars[chars.length - 1].classList.remove('cur'), 2500); return; }
+    if (i >= chars.length) { body.classList.remove('pre'); chars[chars.length - 1].classList.add('cur'); setTimeout(() => chars[chars.length - 1].classList.remove('cur'), 2500); return; }
     chars[i].classList.add('on', 'cur'); i++;
     setTimeout(step, chars[i - 1].textContent === ' ' ? 40 : 110);
   };
