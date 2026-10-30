@@ -19,30 +19,22 @@ button,input,select{font-family:inherit}
 h1,h2,h3,h4{font-weight:700;letter-spacing:-.01em}
 .topbar{background:var(--blue);text-align:center;font-size:13px;padding:6px 0}
 /* hero */
-.hero{position:relative;height:min(78vh,640px);min-height:460px;overflow:hidden;color:var(--green);
+.hero{position:relative;height:100vh;height:100svh;min-height:520px;overflow:hidden;color:var(--green);
   background:#bcd3e8 url("hero.jpg") center 80%/cover no-repeat}
 nav{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:16px 28px}
 nav a{color:inherit;text-decoration:none;font-size:15px;font-weight:700;margin-right:22px}
 nav .logo{position:absolute;left:50%;transform:translateX(-50%);font-size:24px;font-weight:700;margin:0}
-.hero-body{position:absolute;z-index:2;left:0;right:0;top:24%;text-align:center;padding:0 16px}
+.hero-body{position:absolute;z-index:2;left:0;right:0;top:34%;text-align:center;padding:0 16px}
 .hero h1{margin:0;font-size:clamp(32px,5.6vw,56px);line-height:1.25}
 .hero h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--yellow) 62%)}
 .pill{display:inline-block;margin-top:26px;background:var(--yellow);color:var(--green);text-decoration:none;font-size:15px;font-weight:700;padding:12px 34px;border-radius:99px;border:0;cursor:pointer;font-family:inherit}
 .pill:hover{filter:brightness(.96)}
 /* sheet */
-.sheet{position:relative;z-index:3;margin-top:-34px;background:var(--cream);border-radius:34px 34px 0 0;padding:44px 0 60px}
+.sheet{position:relative;z-index:3;margin-top:-34px;background:var(--cream);border-radius:34px 34px 0 0;padding:90px 0 80px}
 .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
 h2.title{margin:0;font-size:clamp(24px,3.6vw,32px)}
 .sub{color:var(--muted);margin:6px 0 22px;font-size:16px}
 /* statement */
-.about{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 60px}
-.about .blue{background:var(--blue);border-radius:14px;padding:44px 34px;text-align:center;display:flex;flex-direction:column;justify-content:center}
-.about .blue small{letter-spacing:.1em;font-size:13px;font-weight:700;margin-bottom:14px}
-.about .blue p{margin:0;font-size:clamp(18px,2.3vw,24px);line-height:1.6}
-.stats{background:var(--sage);border-radius:14px;padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:18px;align-content:center}
-.stats b{display:block;font-variant-numeric:tabular-nums;font-size:42px;line-height:1.1}
-.stats span{font-size:14px;color:var(--muted)}
-@media(max-width:760px){.about{grid-template-columns:1fr}}
 /* explorer */
 .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 input,select{font:inherit;padding:10px 14px;border:1px solid var(--line);border-radius:99px;background:var(--paper);color:var(--text)}
@@ -147,6 +139,85 @@ a{color:var(--green)}
 .rc input:checked+span{background:var(--green)}
 .rc input:checked+span::after{opacity:1}
 .rc input:focus-visible+span{outline:2px solid var(--green);outline-offset:2px}
+.block{padding:70px 0}
+.block:first-child{padding-top:0}
+#intro{min-height:88vh;display:flex;flex-direction:column;justify-content:center}
+#explore{scroll-margin-top:10px}
+.js .reveal{opacity:0;transform:translateY(56px);transition:opacity 1s ease,transform 1s ease}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js .reveal{opacity:1;transform:none;transition:none}}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.18em;color:var(--muted);margin-bottom:14px}
+.intro-title{margin:0;font-size:clamp(38px,8vw,76px);line-height:1.12;letter-spacing:-.02em}
+.intro-title .big{display:inline-flex;align-items:baseline;background:linear-gradient(transparent 66%,var(--yellow) 66%);padding:0 6px}
+.intro-title .big b{font-variant-numeric:tabular-nums;min-width:2.1ch}
+.intro-title .big em{font-style:normal}
+.intro-sub{margin:20px 0 28px;font-size:clamp(16px,2vw,19px);color:var(--muted);line-height:1.8}
+.ticker{overflow:hidden;margin:0 -20px 34px;padding:14px 0;border-block:1px solid var(--line);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.track{display:flex;gap:34px;width:max-content;animation:marquee 38s linear infinite;font-size:22px;font-weight:700;color:var(--green)}
+.track span{display:inline-flex;align-items:center;gap:34px;white-space:nowrap}
+.track span::after{content:"✦";color:var(--red);font-size:14px}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.steps{list-style:none;margin:0 0 34px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.step{border-radius:18px;padding:24px 22px;position:relative;overflow:hidden;transition:transform .35s}
+.step:hover{transform:translateY(-6px)}
+.step.s1{background:var(--blue)}.step.s2{background:#f3d0c8}.step.s3{background:var(--sage)}
+.step .no{display:block;font-size:44px;font-weight:700;line-height:1;opacity:.35;margin-bottom:18px}
+.step h3{margin:0 0 6px;font-size:20px}
+.step p{margin:0;font-size:15px;line-height:1.65;color:#3f4d38}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);padding-top:22px}
+.stats>div{padding:0 14px;border-left:1px solid var(--line)}
+.stats>div:first-child{padding-left:0;border-left:0}
+.stats b{display:block;font-variant-numeric:tabular-nums;font-size:clamp(30px,5vw,44px);line-height:1.1}
+.stats span{font-size:14px;color:var(--muted)}
+.cue{align-self:center;display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:44px;color:var(--green);text-decoration:none;font-weight:700;font-size:15px;text-align:center}
+.cue svg{animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+@media(max-width:700px){.steps{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr;row-gap:18px}.stats>div:nth-child(3){padding-left:0;border-left:0}}
+@media (prefers-reduced-motion:reduce){.track,.cue svg{animation:none}}
+.js .step{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.js #intro.in .step{opacity:1;transform:none}
+.js #intro.in .s2{transition-delay:.18s}.js #intro.in .s3{transition-delay:.36s}
+/* 모달 버튼 다듬기 */
+.dh button{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;padding:0;transition:background .2s}
+.dh button:hover{background:var(--sage)}
+.dh button:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+#likes .ghost{border:0;background:var(--sage);color:var(--green);font-weight:700;padding:7px 15px;transition:filter .2s}
+#likes .ghost:hover{filter:brightness(.94)}
+#likes .stops button{border:0;background:var(--sage);color:var(--green);width:28px;height:28px;padding:0;border-radius:50%;font-size:14px;line-height:28px;transition:background .2s}
+#likes .stops button:hover:not(:disabled){background:var(--green);color:#fff}
+#likes .saved{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:0;background:#fff;border-radius:16px;box-shadow:0 1px 0 var(--line),0 6px 16px -10px rgba(47,61,42,.35);margin-bottom:10px;transition:box-shadow .2s}
+#likes .saved.cur{background:linear-gradient(135deg,#eef3e4,#e3ecd3);box-shadow:inset 0 0 0 1.5px var(--green)}
+#likes .sv-main{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+#likes .sv-name{border:0;background:transparent;font-weight:700;font-size:17px;padding:2px 6px;margin-left:-6px;border-radius:8px;min-width:0;width:100%;color:var(--text);transition:background .2s}
+#likes .sv-name:hover{background:rgba(47,61,42,.07)}
+#likes .sv-name:focus{outline:0;background:#fff;box-shadow:0 0 0 2px var(--green)}
+#likes .sv-meta{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+#likes .sv-meta em{font-style:normal;font-size:11px;font-weight:700;background:var(--green);color:#fff;border-radius:99px;padding:1px 9px}
+#likes .sv-act{display:flex;align-items:center;gap:6px;flex:none}
+#likes .btn-load{border:0;background:var(--green);color:#fff;border-radius:99px;padding:8px 18px;font-size:14px;font-weight:700;cursor:pointer;transition:filter .2s,transform .2s}
+#likes .btn-load:hover{filter:brightness(1.18);transform:translateY(-1px)}
+#likes .btn-del{border:0;background:transparent;color:var(--muted);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;cursor:pointer;padding:0;transition:background .2s,color .2s}
+#likes .btn-del:hover{background:#fbe3df;color:var(--red)}
+@media(max-width:480px){#likes .saved{flex-direction:column;align-items:stretch}#likes .sv-act{justify-content:flex-end}}
+/* 답사 지도 아래 루트 한눈에 보기 */
+.course{display:block;padding:16px 18px;margin-bottom:0;background:#e9f0f9}
+.rt-head{display:flex;justify-content:space-between;align-items:center;gap:10px 14px;flex-wrap:wrap}
+.rt-title b{font-size:18px}
+.rt-act{display:flex;gap:8px;flex-wrap:wrap}
+.rt-btn{display:inline-flex;align-items:center;gap:6px;border:0;background:rgba(255,255,255,.7);color:var(--green);border-radius:99px;padding:8px 15px;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s,transform .2s}
+.rt-btn:hover{background:#fff;transform:translateY(-1px)}
+.rt-btn.solid{background:var(--green);color:#fff}
+.rt-btn.solid:hover{background:#3e5037}
+.rt-btn.undo{background:var(--yellow)}
+.rt-note{margin:10px 0 0;font-size:14px;color:#42536b}
+.rt-note.ok{color:#2c5a2a;font-weight:700}
+.chain{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px 0}
+.chain li{display:flex;align-items:center}
+.chain li:not(:last-child)::after{content:"";width:12px;height:2px;margin:0 3px;background:var(--green);opacity:.4;border-radius:2px}
+.chain button{display:inline-flex;align-items:center;gap:5px;border:0;background:#fff;color:var(--text);border-radius:99px;padding:6px 14px 6px 7px;font-size:13px;font-weight:700;line-height:1.4;cursor:pointer;transition:transform .2s}
+.chain button:hover{transform:translateY(-1px)}
+.chain .n{background:var(--red);color:#fff;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:700}
+#places .controls{margin-top:6px}
 </style>
 </head>
 <body>
@@ -166,33 +237,44 @@ a{color:var(--green)}
 
 <main class="sheet">
   <div class="wrap">
-    <h2 class="title">기록으로 남은 120곳.</h2>
-    <p class="sub">민속과 역사, 자연이 깃든 장소를 지도에서 찾고, 마음에 드는 곳에 하트를 눌러 나만의 답사 루트를 만들고 저장하세요.</p>
+    <section class="block reveal" id="intro">
+      <div class="eyebrow">JEJU HISTORY &amp; CULTURE</div>
+      <h2 class="intro-title">기록으로 남은<br><span class="big"><b data-n="120">120</b><em>곳</em></span>의 제주</h2>
+      <p class="intro-sub">민속과 역사, 자연이 깃든 장소들을 지도 위에서 만나고,<br>마음에 드는 곳만 이어 나만의 답사 루트를 만들어 보세요.</p>
 
-    <div class="about">
-      <div class="blue">
-        <small>STEP BY STEP</small>
-        <p>장소를 검색하고, 좋아요하고,<br>좋아요한 순서대로 이어 걸어보세요.<br>지도 위에 나만의 길이 그려집니다.</p>
-      </div>
+      <div class="ticker" aria-hidden="true"><div class="track" id="track"></div></div>
+
+      <ol class="steps">
+        <li class="step s1"><span class="no">01</span><h3>찾아보기</h3><p>테마와 동네, 검색으로<br>가고 싶은 곳을 찾아요.</p></li>
+        <li class="step s2"><span class="no">02</span><h3>하트 누르기</h3><p>마음에 드는 장소에<br>하트를 눌러 담아요.</p></li>
+        <li class="step s3"><span class="no">03</span><h3>루트 만들기</h3><p>순서를 정해 이름을 붙이고<br>나만의 길로 저장해요.</p></li>
+      </ol>
+
       <div class="stats" id="stats"></div>
-    </div>
 
-    <h2 class="title" id="explore">답사 지도</h2>
-    <div class="controls">
-      <input id="q" type="search" placeholder="장소명, 제목, 주소, 주제, 내용 검색">
-      <select id="cat"><option value="">분류 전체</option></select>
-      <label class="chk"><input id="favonly" type="checkbox">♥ 좋아요만 보기</label>
-    </div>
-    <p class="count" id="count"></p>
+      <a class="cue" href="#explore"><span>아래로 스크롤해서 나만의 루트 만들기</span>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M5 13l7 7 7-7"/></svg></a>
+    </section>
+
+    <section class="block reveal" id="explore">
+    <h2 class="title">답사 지도</h2>
     <div id="map"></div>
     <div class="nomap" id="nomap">지도를 불러오지 못했습니다. 인터넷 연결을 확인하세요. (목록은 계속 사용할 수 있습니다)</div>
     <div class="course" id="course"></div>
+    </section>
 
+    <section class="block reveal" id="places">
     <div class="listhead"><h2 class="title" id="list">장소 보기</h2>
       <div class="seg" id="views"><button data-view="theme">테마별</button><button data-view="area">동네별</button></div>
       <div class="sis" id="sis"><label class="rc"><input type="checkbox" value="제주시" checked><span></span>제주시</label><label class="rc"><input type="checkbox" value="서귀포시" checked><span></span>서귀포시</label></div>
       <div class="cats" id="cats"></div></div>
+    <div class="controls">
+      <input id="q" type="search" placeholder="장소명, 제목, 주소, 주제, 내용 검색">
+      <label class="chk"><input id="favonly" type="checkbox">♥ 좋아요만 보기</label>
+    </div>
+    <p class="count" id="count"></p>
     <div id="groups"></div>
+    </section>
   </div>
 </main>
 <footer>출처: 제주특별자치도 제주역사문화 위치정보·일반정보 (2022-12-09)</footer>
@@ -232,7 +314,8 @@ const persist = () => { try {
   localStorage.setItem('jejuFavs', JSON.stringify(favs)); localStorage.setItem('jejuRouteName', JSON.stringify(routeName));
   localStorage.setItem('jejuRoutes', JSON.stringify(saved)); localStorage.setItem('jejuRouteId', JSON.stringify(curId));
 } catch (e) {} };
-const update = () => { persist(); render(); };
+let prevOrder = null, routeNote = '';   // 추천경로 적용 전 순서(되돌리기용) / 안내 문구
+const update = () => { prevOrder = null; routeNote = ''; persist(); render(); };
 const toggleFav = id => { favs = favs.includes(id) ? favs.filter(x => x !== id) : [...favs, id]; update(); };
 const moveFav = (i, n) => { const j = i + n; if (j < 0 || j >= favs.length) return; [favs[i], favs[j]] = [favs[j], favs[i]]; update(); };
 const newRoute = () => { favs = []; curId = null; routeName = DEFAULT_NAME; update(); };
@@ -248,6 +331,39 @@ const deleteRoute = id => { saved = saved.filter(r => r.id !== id); if (curId ==
 const renameRoute = (id, name) => { const r = saved.find(r => r.id === id); if (!r) return; r.name = name.trim() || r.name; if (curId === id) routeName = r.name; update(); };
 const km = (a, b) => { const r = x => x * Math.PI / 180, h = Math.sin(r(b.lat - a.lat) / 2) ** 2 +
   Math.cos(r(a.lat)) * Math.cos(r(b.lat)) * Math.sin(r(b.lng - a.lng) / 2) ** 2; return 12742 * Math.asin(Math.sqrt(h)); };
+// 추천경로: 첫 장소는 그대로 두고, 가까운 곳부터 이어 붙인 뒤(최근접) 2-opt로 한 번 더 다듬음
+function recommend(ids) {
+  const P = ids.map(byId), n = P.length, left = P.slice(1), path = [P[0]];
+  while (left.length) {
+    const last = path[path.length - 1]; let bi = 0, bd = Infinity;
+    left.forEach((d, i) => { const x = km(last, d); if (x < bd) { bd = x; bi = i; } });
+    path.push(left.splice(bi, 1)[0]);
+  }
+  const len = p => p.reduce((s, d, i) => i ? s + km(p[i - 1], d) : 0, 0);
+  for (let improved = true; improved;) {
+    improved = false;
+    for (let i = 1; i < n - 1; i++) for (let j = i + 1; j < n; j++) {
+      const c = path.slice(0, i).concat(path.slice(i, j + 1).reverse(), path.slice(j + 1));
+      if (len(c) < len(path) - 1e-9) { path.splice(0, n, ...c); improved = true; }
+    }
+  }
+  return path.map(d => d.id);
+}
+const optimize = () => {
+  if (favs.length < 3) return;
+  const best = recommend(favs), before = routeKm(favs), after = routeKm(best);
+  render.skipFit = true;
+  if (after >= before - 1e-9) { routeNote = '이미 가까운 순서로 이어져 있어요.'; return render(); }
+  prevOrder = [...favs]; favs = best;
+  routeNote = `추천경로 적용 · ${before.toFixed(1)}km → ${after.toFixed(1)}km`;
+  persist(); render();
+};
+const undoOrder = () => { if (!prevOrder) return; favs = prevOrder; prevOrder = null; routeNote = ''; render.skipFit = true; persist(); render(); };
+// 칩을 누르면 지도에서 해당 장소 열기
+const focusPlace = id => {
+  if (!map) return; const m = markers[id], d = byId(id);
+  if (clusters.hasLayer(m)) clusters.zoomToShowLayer(m, () => m.openPopup()); else map.flyTo([d.lat, d.lng], 13);
+};
 const routeKm = ids => ids.map(byId).reduce((s, d, i, a) => i ? s + km(a[i - 1], d) : 0, 0);
 
 // ---------- 지도 ----------
@@ -275,7 +391,6 @@ if (window.L && L.markerClusterGroup) {
 // ---------- 목록 ----------
 let view = 'theme', sel = '';   // 보기 방식(테마/동네)과 선택한 카테고리 버튼
 const fill = (el, list) => list.forEach(v => el.add(new Option(v, v)));
-fill($('cat'), [...new Set(data.map(d => d.cat))].sort((a, b) => a.localeCompare(b, 'ko')));
 
 const siOn = d => d.si === '기타' || [...document.querySelectorAll('#sis input:checked')].some(i => i.value === d.si);
 function renderChips() {
@@ -287,7 +402,6 @@ function renderChips() {
 function render() {
   const q = $('q').value.trim().toLowerCase();
   const list = data.filter(d =>
-    (!$('cat').value || d.cat === $('cat').value) &&
     (!sel || themeOf(d) === sel) &&
     siOn(d) &&
     (!$('favonly').checked || favs.includes(d.id)) &&
@@ -324,9 +438,21 @@ const card = d => { const on = favs.includes(d.id), i = colorIdx(d); return `
 function renderRoute() {
   const stops = favs.map(byId), dist = routeKm(favs);
   $('likeCount').textContent = favs.length;
-  $('course').innerHTML = stops.length
-    ? `<div><b>🚩 ${esc(routeName)}</b><span class="sum">${stops.length}곳 · 직선거리 약 ${dist.toFixed(1)}km</span></div><button class="pill sm" onclick="openLikes()">루트 편집·저장</button>`
-    : `<div><span class="hint">카드나 핀의 ♡를 누르면 좋아요한 순서대로 지도에 루트가 그려져요.</span></div><button class="pill sm" onclick="openLikes()">저장된 루트 보기</button>`;
+  const ICON_UNDO = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg>';
+  const ICON_ROUTE = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h6a4 4 0 0 0 0-8h-4a4 4 0 0 1 0-8h6"/></svg>';
+  $('course').innerHTML = stops.length ? `
+    <div class="rt-head">
+      <div class="rt-title"><b>🚩 ${esc(routeName)}</b><span class="sum">${stops.length}곳 · 직선거리 약 ${dist.toFixed(1)}km</span></div>
+      <div class="rt-act">
+        ${stops.length > 2 ? `<button class="rt-btn" onclick="optimize()">${ICON_ROUTE}추천경로 보기</button>` : ''}
+        ${prevOrder ? `<button class="rt-btn undo" onclick="undoOrder()" title="추천경로 적용 전 순서로 되돌리기">${ICON_UNDO}되돌리기</button>` : ''}
+        <button class="rt-btn solid" onclick="openLikes()">루트 편집·저장</button>
+      </div>
+    </div>
+    ${routeNote ? `<p class="rt-note ${prevOrder ? 'ok' : ''}">${esc(routeNote)}</p>` : ''}
+    <ol class="chain">${stops.map((d, i) => `<li><button onclick="focusPlace('${d.id}')" title="지도에서 보기"><span class="n">${i + 1}</span>${esc(d.name)}</button></li>`).join('')}</ol>`
+    : `<div class="rt-head"><span class="hint">카드나 핀의 ♡를 누르면 좋아요한 순서대로 지도에 루트가 그려져요.</span>
+      <div class="rt-act"><button class="rt-btn solid" onclick="openLikes()">저장된 루트 보기</button></div></div>`;
   if ($('likes').open) renderLikes();
   if (!map) return;
   routeLayer.clearLayers();
@@ -358,9 +484,12 @@ function renderLikes() {
       <div class="rowflex"><button class="ghost" onclick="newRoute()">새 루트 시작</button></div>
       <h3 class="sec">저장된 루트 <small>${saved.length}개</small></h3>
       ${saved.length ? saved.map(r => `<div class="saved ${r.id === curId ? 'cur' : ''}">
-        <input value="${esc(r.name)}" maxlength="30" onchange="renameRoute('${r.id}',this.value)" aria-label="루트 이름 변경">
-        <span class="tg">${r.ids.length}곳 · ${routeKm(r.ids).toFixed(1)}km</span>
-        <button onclick="loadRoute('${r.id}')">불러오기</button><button onclick="if(confirm('이 루트를 삭제할까요?'))deleteRoute('${r.id}')">삭제</button></div>`).join('')
+        <div class="sv-main">
+          <input class="sv-name" value="${esc(r.name)}" maxlength="30" onchange="renameRoute('${r.id}',this.value)" aria-label="루트 이름 변경" title="클릭해서 이름 변경">
+          <span class="sv-meta">${r.id === curId ? '<em>편집 중</em>' : ''}${r.ids.length}곳 · ${routeKm(r.ids).toFixed(1)}km</span>
+        </div>
+        <div class="sv-act"><button class="btn-load" onclick="loadRoute('${r.id}')">불러오기</button>
+          <button class="btn-del" aria-label="루트 삭제" title="삭제" onclick="if(confirm('이 루트를 삭제할까요?'))deleteRoute('${r.id}')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v5M14 11v5"/></svg></button></div></div>`).join('')
         : '<p class="note">저장된 루트가 없습니다. 이름을 정하고 "루트 저장"을 누르세요.</p>'}
     </div>`;
 }
@@ -393,14 +522,25 @@ $('views').addEventListener('click', e => { const b = e.target.closest('button')
 ['dlg', 'likes'].forEach(id => $(id).addEventListener('click', e => { if (e.target === $(id)) $(id).close(); }));
 $('likeBtn').addEventListener('click', openLikes);
 $('sis').addEventListener('change', render);
-['q','cat','favonly'].forEach(id => $(id).addEventListener('input', render));
+['q','favonly'].forEach(id => $(id).addEventListener('input', render));
 
 $('stats').innerHTML = [[data.length, '기록된 장소'], [new Set(data.map(d => d.cat)).size, '분류'], [themes.length, '테마'], [new Set(data.map(d => d.town)).size, '동네']]
   .map(([n, t]) => `<div><b data-n="${n}">${n}</b><span>${t}</span></div>`).join('');
 
+// 섹션 스크롤 등장: 화면에 들어올 때 한 섹션씩 떠오름
+(function () {
+  const secs = [...document.querySelectorAll('.reveal')];
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.classList.add('js');
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), {threshold: 0, rootMargin: '0px 0px -15% 0px'});
+  secs.forEach(el => io.observe(el));
+})();
+
 // 통계 숫자: 화면에 보이면 0에서 목표값까지 카운트 업 (한 번만)
 (function () {
-  const nums = [...$('stats').querySelectorAll('b')];
+  const nums = [...$('intro').querySelectorAll('b[data-n]')];
   if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   nums.forEach(b => b.textContent = '0');
   const run = b => {
@@ -415,9 +555,10 @@ $('stats').innerHTML = [[data.length, '기록된 장소'], [new Set(data.map(d =
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (!e.isIntersecting) return;
     io.disconnect(); nums.forEach(run);
-  }), {threshold: .4});
-  io.observe($('stats'));
+  }), {threshold: .25});
+  io.observe($('intro'));
 })();
+$('track').innerHTML = [0, 1].map(() => themes.map(t => `<span>${esc(t)}</span>`).join('')).join('');
 render();
 
 // 히어로 타이핑 효과: 글자를 미리 배치해 두고 하나씩 보여 줘서 레이아웃이 흔들리지 않음
